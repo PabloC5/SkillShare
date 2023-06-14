@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { ListSkillers } from '../screens/ListSkillers';
 import Favorite from '../screens/Favorite';
@@ -6,9 +6,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function Menu() {
+export default function Menu() {  
+  async function handlechangeScreen() {
+    // await updateData();
+    console.log("trocando a tela marotamente");
+  }
   return (
-    <Tab.Navigator barStyle={{ backgroundColor: 'white' }}>
+    <Tab.Navigator screenListeners={{tabPress: () => {
+      handlechangeScreen()
+    }}} barStyle={{ backgroundColor: 'white' }}>
       <Tab.Screen
         options={{
           tabBarLabel: 'ListSkillers',
