@@ -103,7 +103,8 @@ export function ListSkillers() {
         return (
           (e.zap && e.zap.includes(filterText)) ||
           (e.name && e.name.includes(filterText)) ||
-          (e.bio && e.bio.includes(filterText))
+          (e.bio && e.bio.includes(filterText)) ||
+          (e.skills && e.skills.includes(filterText))
         );
       });
       setFilteredData(filteredAux);
