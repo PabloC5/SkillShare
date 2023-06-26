@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "project-base-react-native",
-    "slug": "project-base-react-native",
-    "version": "1.0.0",
+    "name": "skillShare",
+    "slug": "skillShare",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.klesio.skillShare"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "28c6d705-4494-48ca-bed5-975254a55b7f"
+      }
     }
   }
 }
