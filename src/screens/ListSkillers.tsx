@@ -32,7 +32,7 @@ export function ListSkillers() {
   const { saveFavorites } = useUserData('users');
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-  
+
   async function updateData() {
     setLoading(true);
     const data = await allDates();
@@ -68,48 +68,67 @@ export function ListSkillers() {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'Adicionar', onPress: () => handleAddFavorite(favoriteID)},
+      { text: 'Adicionar', onPress: () => handleAddFavorite(favoriteID) },
     ]);
   }
 
   function confirmRedirectZap(skillerZap: string, skillerName: string) {
-    let welcomeZap = `Olá, encontrei seu cadastro no aplicativo Skillshare e gostaria de aprender com você. \nQuando podemos agendar uma aula ?`
-    Alert.alert('Atenção!', `Deseja iniciar uma conversa no whatsapp ${skillerName}`, [
-      {
-        text: 'Cancelar',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Prosseguir', onPress: () => Linking.openURL(`https://wa.me/55${skillerZap}?text=${welcomeZap}`)},
-    ]);
+    let welcomeZap = `Olá, encontrei seu cadastro no aplicativo Skillshare e gostaria de aprender com você. \nQuando podemos agendar uma aula ?`;
+    Alert.alert(
+      'Atenção!',
+      `Deseja iniciar uma conversa no whatsapp ${skillerName}`,
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Prosseguir',
+          onPress: () =>
+            Linking.openURL(`https://wa.me/55${skillerZap}?text=${welcomeZap}`),
+        },
+      ]
+    );
   }
 
   function confirmGoogle(meetLink: string, skillerName: string) {
-    Alert.alert('Atenção!', `Deseja entrar em chamada no meet de ${skillerName}`, [
-      {
-        text: 'Cancelar',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Sim', onPress: () => Linking.openURL(meetLink)},
-    ]);
+    Alert.alert(
+      'Atenção!',
+      `Deseja entrar em chamada no meet de ${skillerName}`,
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Sim', onPress: () => Linking.openURL(meetLink) },
+      ]
+    );
   }
 
   function handleFilter() {
-    console.log('filterText:', filterText);
+    const filterTextLower = filterText.toLowerCase();
 
-    if (filterText.length > 1) {
-      const filteredAux = data.filter((e: UserType) => {
-        return (
-          (e.zap && e.zap.includes(filterText)) ||
-          (e.name && e.name.includes(filterText)) ||
-          (e.bio && e.bio.includes(filterText)) ||
-          (e.skills && e.skills.includes(filterText))
-        );
-      });
+    console.log('filterText:', filterTextLower);
+    if (filterTextLower.length > 1) {
+      const filteredAux = data.filter(
+        ({ zap, name, bio, skills }: UserType) => {
+          const lowerZap = zap ? zap.toLowerCase() : '';
+          const lowerName = name ? name.toLowerCase() : '';
+          const lowerBio = bio ? bio.toLowerCase() : '';
+          const lowerSkills = skills ? skills.toLowerCase() : '';
+
+          return (
+            lowerZap.includes(filterTextLower) ||
+            lowerName.includes(filterTextLower) ||
+            lowerBio.includes(filterTextLower) ||
+            lowerSkills.includes(filterTextLower)
+          );
+        }
+      );
       setFilteredData(filteredAux);
     } else {
-      console.log('setFilteredData');
       setFilteredData(data);
     }
   }
@@ -185,13 +204,15 @@ export function ListSkillers() {
                           {item.bio}
                         </Text>
 
-                        <Text className='mb-5' variant='bodyMedium' onPress={() => {confirmGoogle   (item.link, item.name)}}>
-                          <Text>
-                            {`Por aqui: `}
-                          </Text>
-                          <Text>
-                            {item.link}
-                          </Text>
+                        <Text
+                          className='mb-5'
+                          variant='bodyMedium'
+                          onPress={() => {
+                            confirmGoogle(item.link, item.name);
+                          }}
+                        >
+                          <Text>{`Por aqui: `}</Text>
+                          <Text>{item.link}</Text>
                         </Text>
                         <Divider className='m-2 w-full' />
                         <View className='flex-row justify-center mt-5'>
@@ -212,7 +233,9 @@ export function ListSkillers() {
                         <TouchableOpacity
                           activeOpacity={0.7}
                           className='flex-1 flex-row flex bg-green-900 rounded-md justify-center'
-                          onPress={() => confirmRedirectZap(item.zap, item.name)}
+                          onPress={() =>
+                            confirmRedirectZap(item.zap, item.name)
+                          }
                         >
                           <Text className='text-white ml-3 p-3 text-base font-PoppinsRegular'>
                             {' '}
