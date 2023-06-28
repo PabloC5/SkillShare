@@ -14,6 +14,9 @@ import {
   Poppins_600SemiBold,
 } from '@expo-google-fonts/poppins';
 
+import { NativeWindStyleSheet } from "nativewind";
+
+
 import { Loading } from './src/components/Loading';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './src/screens/config/firebaseConfig-skillShare';
@@ -27,6 +30,10 @@ export default function App() {
     Poppins_500Medium,
     Poppins_400Regular,
     Poppins_600SemiBold,
+  });
+
+  NativeWindStyleSheet.setOutput({
+    default: "native",
   });
 
   if (!fontsLoaded) return <Loading />;

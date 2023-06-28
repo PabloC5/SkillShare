@@ -34,6 +34,7 @@ export function Home() {
   const verifyLoginStudent = () => {
     setRedirect('student');
     user ? navigate('student') : setModalVisible(!modalVisible);
+
   };
 
   const verifyLoginSkiller = () => {
